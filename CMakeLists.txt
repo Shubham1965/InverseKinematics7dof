@@ -17,18 +17,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(eigen)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
-# include_directories(${EIGEN3_INCLUDE_DIR})
-
 # Manually set Eigen3 include directory
 set(EIGEN3_INCLUDE_DIR ${eigen_SOURCE_DIR})
 include_directories(${EIGEN3_INCLUDE_DIR})
-
-# Debugging: Print Eigen version
-message(STATUS "Eigen version: ${EIGEN3_VERSION}")
-
-# Debugging: Print Eigen include directory
-message(STATUS "Eigen include directory: ${EIGEN3_INCLUDE_DIR}")
-
 include_directories(${PROJECT_SOURCE_DIR}/include)
+
 add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 
