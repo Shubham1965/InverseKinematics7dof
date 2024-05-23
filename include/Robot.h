@@ -22,7 +22,7 @@ public:
     Eigen::Matrix4d DH(double a, double alpha, double d, double theta);
     Eigen::Matrix4d forwardKinematics(const Eigen::VectorXd& theta);
     Eigen::MatrixXd jacobian(const Eigen::VectorXd& theta);
-    Eigen::Quaterniond Robot::errorQuaternion(const Eigen::Matrix3d &R_current, const Eigen::Matrix3d &R_target);
-    Eigen::Vector3d Robot::quaternion_to_rotation_vector(const Eigen::Quaterniond &q);
+    Eigen::Quaterniond errorQuaternion(const Eigen::Matrix3d &R_current, const Eigen::Matrix3d &R_target);
+    Eigen::Vector3d quaternion_to_rotation_vector(const Eigen::Quaterniond &q);
     double conditionNumber(const Eigen::MatrixXd& J);
 };

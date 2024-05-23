@@ -10,7 +10,7 @@ class InverseKinematics {
 private:
     Robot& robot;
     int maxIterations = 50;
-    double tolerance = 1e-6;
+    double tolerance = 1e-3;
     double damping = 0.01;
 
 public:
