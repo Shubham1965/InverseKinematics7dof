@@ -118,4 +118,4 @@ The main crux of solving inverse kinematics numerically is handling the redundan
 
 View the complete algorithm here - [Inverse Kinematics Algorithm ](doc/Inverse_Kinematics.pdf)
 
-> Damping factor $\lambda$, and the secondary objective gain $\alpha$ plays a crucial role in convergence. They act as a parameter set that needs to be further tuned in order to converge within 50 iterations. Further refinement would be on how to change these parameters to find the optimal deviation on angles and quickly converge to the optimal configuration 
+> Initial $q_{seed}$, the damping factor $\lambda$, and the secondary objective gain $\alpha$ plays a crucial role in convergence. They act as a parameter set that needs to be further tuned in order to converge within stipulated amount of iterations. Further refinement would be on how to change these parameters to find the optimal deviation on angles and quickly converge to the optimal configuration within the iteration limits. 
