@@ -10,7 +10,7 @@ int main() {
     robot.initializeJointLimits();
 
     // Target position and orientation
-    Eigen::Vector3d target_position(1.0, 0.3, 0.6); // Example target position describing the target position is at (0.5m, 0.3m, 0.6m) in the 3D space
+    Eigen::Vector3d target_position(2.0, 0.3, 0.6); // Example target position describing the target position is at (0.5m, 0.3m, 0.6m) in the 3D space
     Eigen::Quaterniond target_orientation(-0.7071, 0, 0, 0.7071); // Example quaternion (w, x, y, z) describing the target orientation as a 90-degree rotation around the z-axis
 
 
@@ -29,6 +29,8 @@ int main() {
     std::cout << "\nPredicted transformation is:\n" << robot.forwardKinematics(final_theta) << std::endl;
 
     Eigen::Matrix4d diff = target_transform - robot.forwardKinematics(final_theta);
-    std::cout << "Success rate: " << 100 - diff.norm()/target_transform.norm() *100 << std::endl;
+    std::cout << "\nSuccess rate: " << 100 - diff.norm()/target_transform.norm() *100 << std::endl;
+
+    std::cout << "\nCondition number of the Jacobian at the solution: " << robot.conditionNumber(robot.jacobian(final_theta)) << std::endl;
     return 0;
 }

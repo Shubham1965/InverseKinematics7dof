@@ -19,16 +19,20 @@ Eigen::VectorXd InverseKinematics::solve(const Eigen::Vector3d &target_position,
         error << position_error, orientation_error;
 
         if (error.norm() < InverseKinematics::tolerance){
-            std::cout<<"Solution found in " << iter+1 << " iterations." << std::endl;
+            std::cout<<"\nSolution found in " << iter+1 << " iterations." << std::endl;
             return theta;
         }
 
+        Eigen::MatrixXd I = Eigen::MatrixXd::Identity(theta.size(), theta.size());
         Eigen::MatrixXd J = robot.jacobian(theta);
         Eigen::MatrixXd J_pseudo_inv = (J.transpose() * J + InverseKinematics::damping * Eigen::MatrixXd::Identity(theta.size(), theta.size())).inverse() * J.transpose();
+        Eigen::MatrixXd N = I - J_pseudo_inv * J;
+
 
         Eigen::VectorXd theta_diff = theta - (robot.JOINT_MAX_ + robot.JOINT_MIN_) / 2.0;
+        Eigen::VectorXd secondary_objective = -0.01 * theta_diff;
 
-        Eigen::VectorXd delta_theta = J_pseudo_inv * error - 0.0001 * theta_diff;
+        Eigen::VectorXd delta_theta = J_pseudo_inv * error + N * secondary_objective;
 
         theta += delta_theta;
 
@@ -36,7 +40,7 @@ Eigen::VectorXd InverseKinematics::solve(const Eigen::Vector3d &target_position,
         theta = theta.cwiseMax(robot.JOINT_MIN_).cwiseMin(robot.JOINT_MAX_);
     }
 
-    std::cout<<"Max number of iterations reached. Solution not found." << std::endl;
+    std::cout<<"\nMax number of iterations reached. Solution found is proximal." << std::endl;
     return theta;
 }
 
