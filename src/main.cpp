@@ -30,7 +30,5 @@ int main() {
 
     Eigen::Matrix4d diff = target_transform - robot.forwardKinematics(final_theta);
     std::cout << "Success rate: " << 100 - diff.norm()/target_transform.norm() *100 << std::endl;
-
-    std::cout << final_theta.size() << std::endl;
     return 0;
 }
