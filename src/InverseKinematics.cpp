@@ -45,7 +45,7 @@ Eigen::VectorXd InverseKinematics::solve(const Eigen::Vector3d &target_position,
         target_transform.block<3, 3>(0, 0) = target_orientation.toRotationMatrix();
 
         Eigen::Matrix4d diff = target_transform - T;
-        std::cout << "Iteration " << iter+1 << ": " << theta.transpose() << ", error: " << error.norm() << ", condition number: " << robot.conditionNumber(J) << ", success rate: " << 100 - diff.norm()/target_transform.norm() *100std::endl;
+        std::cout << "Iteration " << iter+1 << ": " << theta.transpose() << ", error: " << error.norm() << ", condition number: " << robot.conditionNumber(J) << ", success rate: " << 100 - diff.norm()/target_transform.norm() *100<< std::endl;
     }
 
     std::cout<<"\nMax number of iterations reached. Solution found is proximal." << std::endl;
