@@ -10,9 +10,8 @@ int main() {
     robot.initializeJointLimits();
 
     // Target position and orientation
-    Eigen::Vector3d target_position(2.0, 0.3, 0.6); // Example target position describing the target position is at (0.5m, 0.3m, 0.6m) in the 3D space
+    Eigen::Vector3d target_position(0.5, 0.3, 0.6); // Example target position describing the target position is at (0.5m, 0.3m, 0.6m) in the 3D space
     Eigen::Quaterniond target_orientation(-0.7071, 0, 0, 0.7071); // Example quaternion (w, x, y, z) describing the target orientation as a 90-degree rotation around the z-axis
-
 
     // Compute the target transformation matrix for comparison
     Eigen::Matrix4d target_transform = Eigen::Matrix4d::Identity();

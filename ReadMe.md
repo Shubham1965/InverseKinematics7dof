@@ -3,7 +3,6 @@
 This project develops an advanced inverse kinematics solution for the Maira robot using Denavit-Hartenberg (DH) parameters. It calculates orientation errors with quaternions, enforces joint limits (±180° for all axes, except A2: ±120° and A4: ±150°), computes the Jacobian matrix, and handles redundancy using pseudo-inverse, null-space projection, and a secondary objective enforcing the joints to stay close to mean of its ranges. The implementation is object-oriented, efficient, and includes condition number calculation for the Jacobian. A test function estimates the success rate in terms of Forbenius norm of the difference of target and converged transformations, that encapsulates the proximity of the solution.  
 
 ## Table of Contents
-
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Building the Project](#building-the-project)
@@ -12,38 +11,42 @@ This project develops an advanced inverse kinematics solution for the Maira robo
 - [Solution Approach](#solution-approach)
 
 ## Prerequisites
-
 Before you begin, ensure you have met the following requirements:
-
-- You have installed a C++ compiler (e.g., g++, clang++)
-- You have installed [CMake](https://cmake.org/download/)
-- You have installed [Make](https://www.gnu.org/software/make/)
+- You are working in a Linux environment (here using Ubuntu 22.04.3 LTS). 
+- You have installed C++ compiler (e.g., g++, clang++).
+- You have installed [CMake](https://cmake.org/download/), preferably the latest version.
+- You have installed [Make](https://www.gnu.org/software/make/), preferably GNU Make 4.3 or latest.
 - Additional dependencies of Eigen and Gtest will be added through the `CMakeLists.txt`.
 
 ## Project Structure
-
-Open up your command line and first clone the repository and change the directory to the project. 
+Open up your command line and first clone the repository using ssh preferably. If you do not have an ssh key then click [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to generate o ne and click [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to add to your github profile. Change the directory to the project. 
 ```sh
-git clone https://github.com/Shubham1965/InverseKinematics7dof.git
+git clone git@github.com:Shubham1965/InverseKinematics7dof.git
 cd InverseKinematics7dof
 ```
 
 You'll see the following directory structure.
 
 ```plaintext
-InverseKinemtics7dof/
-├── include/
-│   └── ... # header files
-├── src/
-│   └── ... # source files
-├── tests/
-│   └── ... # test files
 ├── CMakeLists.txt
-└── README.md
+├── doc
+│   └── Inverse_Kinematics.pdf
+├── include
+│   ├── InverseKinematics.h
+│   └── Robot.h
+├── ReadMe.md
+├── src
+│   ├── CMakeLists.txt
+│   ├── InverseKinematics.cpp
+│   ├── main.cpp
+│   └── Robot.cpp
+└── tests
+    ├── CMakeLists.txt
+    └── test_inverse_kinematics.cpp
 ```
 
 ## Building the project
-In order to build the project, execute the following commands. 
+Before building the project check whether you have cmake and make installed by checking their versions using `cmake --version` and `make --version`. Next, in order to build the project, execute the following commands. 
 ```sh
 mkdir build
 cd build
@@ -52,32 +55,36 @@ make
 ```
 
 After building, the directory structure should look like this:
-
 ```
-yourproject/
-├── include/
-│   └── ... # header files
-├── src/
-│   └── ... # source files
-├── tests/
-│   └── ... # test files
+├── CMakeLists.txt
 ├── build/
 │   ├── src/
 │   │   └── bin_main.exe
 │   ├── tests/
 │   │   └── test_ik.exe
 │   └── ... # other build files
-├── CMakeLists.txt
-└── README.md
+├── doc
+│   └── Inverse_Kinematics.pdf
+├── include
+│   ├── InverseKinematics.h
+│   └── Robot.h
+├── ReadMe.md
+├── src
+│   ├── CMakeLists.txt
+│   ├── InverseKinematics.cpp
+│   ├── main.cpp
+│   └── Robot.cpp
+└── tests
+    ├── CMakeLists.txt
+    └── test_inverse_kinematics.cpp
 ```
 
-
 ## Testing the project
-Before running the project, it is important to test whether all functiions work. Ideally there should have been tests for each fucntioin definition but here i build it jut for one. So, in order to test the project, navigate to the `build/tests` directory and execute
+Before running the project, it is important to test whether all functions work. Ideally there should have been tests for each function definitions but here i made it jut for one. So, in order to test the project, navigate to the `build/tests` directory and execute
 ```sh
 ./tests/test_ik.exe
 ```
-This is a test routine to check whether `InverseKinematics::solve` function always works and gives an output. This is just a sanity check. Ideally, all tests should pass.
+This is a test routine to check whether `InverseKinematics::solve` function always works and gives an output. This is just a sanity check.
 
 ## Running the project:
 To run the main executable after testing, navigate to the `build/src` directory and execute
@@ -111,7 +118,7 @@ The main crux of solving inverse kinematics numerically is handling the redundan
 
 - **Null-Space Projection**: The null-space matrix 𝑁 allows for movements that do not affect the primary task. This is used to optimize secondary objectives, such as keeping joint angles away from limits.
 
-- **Secondary Objective**: A simple gradient descent towards the middle of the joint range helps avoid joint limits. The secondary objective term xxxxx can be adjusted according to the specific requirements of your application.
+- **Secondary Objective**: A simple gradient descent towards the middle of the joint range helps avoid joint limits. The secondary objective term $\alpha q_{diff}$ can be adjusted according to the specific requirements of your application.
 
 - **Joint Limit Enforcement**: After each iteration, the joint angles are clamped to ensure they stay within the specified limits.
 

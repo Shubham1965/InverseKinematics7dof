@@ -38,6 +38,14 @@ Eigen::VectorXd InverseKinematics::solve(const Eigen::Vector3d &target_position,
 
         // Joint limits enforcement
         theta = theta.cwiseMax(robot.JOINT_MIN_).cwiseMin(robot.JOINT_MAX_);
+
+
+        Eigen::Matrix4d target_transform = Eigen::Matrix4d::Identity();
+        target_transform.block<3, 1>(0, 3) = target_position;
+        target_transform.block<3, 3>(0, 0) = target_orientation.toRotationMatrix();
+
+        Eigen::Matrix4d diff = target_transform - T;
+        std::cout << "Iteration " << iter+1 << ": " << theta.transpose() << ", error: " << error.norm() << ", condition number: " << robot.conditionNumber(J) << ", success rate: " << 100 - diff.norm()/target_transform.norm() *100std::endl;
     }
 
     std::cout<<"\nMax number of iterations reached. Solution found is proximal." << std::endl;
