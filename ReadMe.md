@@ -91,7 +91,7 @@ To run the main executable after testing, navigate to the `build/src` directory 
 ```sh
 ./src/bin_main.exe
 ```
-This is the main test implementation where you can change the desired position and orientation, 
+This is the executable of `main.cpp` where you can change the desired position and orientation, 
 ```c++
 // Target position and orientation
 // Example target position describing the target position is at (0.5m, 0.3m, 0.6m) in the 3D space
