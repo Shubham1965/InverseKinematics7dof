@@ -82,14 +82,14 @@ After building, the directory structure should look like this:
 ## Testing the project
 Before running the project, it is important to test whether all functions work. Ideally there should have been tests for each function definitions but here i made it jut for one. So, in order to test the project, navigate to the `build/tests` directory and execute
 ```sh
-./tests/test_ik.exe
+./tests/test_ik
 ```
 This is a test routine to check whether `InverseKinematics::solve` function always works and gives an output. This is just a sanity check.
 
 ## Running the project:
 To run the main executable after testing, navigate to the `build/src` directory and execute
 ```sh
-./src/bin_main.exe
+./src/bin_main
 ```
 This is the executable of `main.cpp` where you can change the desired position and orientation, 
 ```c++
